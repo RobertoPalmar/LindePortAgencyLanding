@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+npm-debug.log*
+.env*.local
+.vercel
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# Material de origen sin usar en la web. El vídeo de prueba pesa 101 MB y GitHub
+# rechaza archivos de más de 100 MB: se queda solo en local.
+design-assets/video/
