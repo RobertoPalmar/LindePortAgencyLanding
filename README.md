@@ -93,13 +93,12 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
    mono; nunca stock genérico. Ya conectados: agencia, vídeo de launch, las 3 de galería y los
    5 puertos (`public/photos/`). Las fotos no asignadas están en `design-assets/photos/`, fuera de
    `public/`, para no desplegar peso muerto.
-2. **Comprimir el vídeo de Launch.** `public/photos/launch/ship-launch.mp4` pesa 78,7 MB en bruto y
-   **está en `.gitignore`**: la web lo necesita para verse en local, pero no entra al repo hasta
-   tener una versión de ~2-3 MB. Recomendado:
-   `ffmpeg -i ship-launch.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 28 -movflags +faststart out.mp4`
-   más un `poster` del primer fotograma (`preload="metadata"` ya está puesto). Al sustituirlo,
-   quitar la línea correspondiente de `.gitignore`.
-   El material de origen sin usar vive en `design-assets/` (también ignorado en el caso de vídeo).
+2. **Afinar los vídeos.** `ship-launch.mp4` (Launch, 1280×720 · 21,6 s · 23,3 MB) y
+   `ship-launch-2.mp4` (hero, 6,0 MB) ya están en el repo. El de Launch sigue a ~8,6 Mbps: se puede
+   bajar a ~3 MB sin pérdida visible con
+   `ffmpeg -i ship-launch.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 28 -movflags +faststart out.mp4`.
+   Falta además un `poster` del primer fotograma para cada uno (`preload="metadata"` ya está puesto).
+   El material de origen sin usar vive en `design-assets/` (la carpeta `video/` está ignorada).
 3. **PDFs del brochure**: `public/brochure/linde-brochure-es.pdf` y `-en.pdf` (los enlaces existen).
 4. **Datos de contacto reales** en `messages/*.ts` (`contact.blocks`) y en el `contactPoint` /
    `address` del JSON-LD.
