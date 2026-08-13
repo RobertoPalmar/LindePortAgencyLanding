@@ -41,9 +41,16 @@ export function ImageFrame({
   const position = fillParent ? "absolute inset-0" : "relative";
 
   return (
-    <div className={`${position} overflow-hidden ${frames[frame]} ${className}`} style={style}>
+    <div className={`group ${position} overflow-hidden ${frames[frame]} ${className}`} style={style}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover transition-transform duration-[0.7s] ease-out group-hover:scale-[1.06]"
+        />
       ) : (
         // arriba a la izquierda: las placas de rótulo van abajo y taparían el texto
         <div className="absolute inset-0 flex items-start p-6">

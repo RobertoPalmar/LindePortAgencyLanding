@@ -31,10 +31,16 @@ export function LaunchSection({ d }: { d: Dictionary }) {
             {d.launch.services.map((item) => (
               <div
                 key={item}
-                className="flex items-baseline gap-3 border-b border-navy-line py-[13px]"
+                className="group relative flex items-baseline gap-3 overflow-hidden border-b border-navy-line py-[13px] pl-3 transition-colors duration-[0.22s] hover:bg-white/[0.06]"
               >
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-[1px] left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-red transition-transform duration-[0.28s] ease-out group-hover:scale-y-100"
+                />
                 <span aria-hidden="true" className="h-[6px] w-[6px] flex-none bg-red" />
-                <span className="text-[15px] leading-[1.4] text-onNavy-3">{item}</span>
+                <span className="text-[15px] leading-[1.4] text-onNavy-3 transition-transform duration-[0.28s] ease-out group-hover:translate-x-[3px]">
+                  {item}
+                </span>
               </div>
             ))}
           </div>

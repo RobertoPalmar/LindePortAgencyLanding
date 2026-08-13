@@ -80,9 +80,10 @@ export function Header({ d, locale }: Props) {
             </a>
           ))}
           <LangButton d={d} next={next} />
+          {/* misma caja que el botón de idioma: padding y cuerpo idénticos */}
           <a
             href="#contact"
-            className="bg-navy px-6 py-[13px] text-[12px] font-semibold tracking-[0.09em] text-white transition-[background,transform] duration-200 hover:-translate-y-[2px] hover:bg-red"
+            className="border border-navy bg-navy px-[14px] py-[9px] text-[11px] font-semibold tracking-[0.09em] text-white transition-[background,border-color,transform] duration-200 hover:-translate-y-[2px] hover:border-red hover:bg-red"
           >
             {d.nav.ctaQuote}
           </a>

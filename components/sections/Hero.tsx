@@ -1,8 +1,13 @@
 import type { Dictionary } from "@/lib/i18n";
+import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
 export function Hero({ d }: { d: Dictionary }) {
   return (
     <section id="top" className="relative overflow-hidden bg-navy">
+      {/* Vídeo de fondo con velo navy: el hero del prototipo era navy plano */}
+      <BackgroundVideo src="/photos/launch/ship-launch-2.mp4" className="saturate-[1.6]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-navy/[0.82]" />
+
       <div className="rail pointer-events-none relative grid items-center gap-12 pb-6 pt-16 lg:grid-cols-2 lg:pt-[92px]">
         {/* Una columna: el logo va arriba y el texto centrado; a partir de lg, dos columnas */}
         <div className="order-2 animate-rise text-center lg:order-1 lg:text-left">

@@ -9,12 +9,11 @@ import { LifebuoyMark } from "@/components/ui/LifebuoyMark";
  */
 export function AgencySection({ d }: { d: Dictionary }) {
   return (
-    <section
-      id="agency"
-      className="grid border-t border-hair bg-paper lg:grid-cols-[520px_1fr]"
-    >
-      {/* Columna izquierda: foto vertical a sangre con placa navy y tirador rojo */}
-      <div className="relative min-h-[380px] overflow-hidden bg-panel-2 lg:min-h-[640px]">
+    <section id="agency" className="border-t border-hair bg-paper">
+      {/* Dentro del riel: la banda ya no llega al borde del viewport */}
+      <div className="rail grid lg:grid-cols-[480px_1fr]">
+        {/* Columna izquierda: foto con filete navy lateral, placa y tirador rojo */}
+        <div className="group relative min-h-[380px] overflow-hidden border-l-[10px] border-navy bg-panel-2 lg:min-h-[640px]">
         <ImageFrame
           src="/photos/agency/agency-vertical.jpg"
           alt={d.agency.photoAlt}
@@ -30,7 +29,7 @@ export function AgencySection({ d }: { d: Dictionary }) {
         </div>
       </div>
 
-      <div className="relative flex flex-col overflow-hidden px-[var(--rail)] pb-[72px] pt-16 lg:py-[96px] lg:pb-[104px] lg:pl-16 lg:pr-[72px]">
+        <div className="relative flex flex-col overflow-hidden pb-[72px] pt-16 lg:py-[96px] lg:pb-[104px] lg:pl-14">
         {/* Salvavidas de línea: llena el aire de la esquina inferior derecha */}
         <LifebuoyMark className="pointer-events-none absolute bottom-[-64px] right-[-52px] h-[340px] w-[340px] rotate-[18deg] opacity-75" />
 
@@ -48,13 +47,20 @@ export function AgencySection({ d }: { d: Dictionary }) {
             {d.agency.services.map((name, i) => (
               <div
                 key={name}
-                className="group flex min-h-[54px] items-baseline gap-3 border-b border-rule py-[14px] transition-colors duration-[0.22s] hover:bg-hover-cream"
+                className="group relative flex min-h-[54px] items-baseline gap-3 overflow-hidden border-b border-rule py-[14px] pl-3 transition-colors duration-[0.22s] hover:bg-hover-cream"
               >
+                {/* marca roja que entra desde la izquierda en hover */}
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-[1px] left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-red transition-transform duration-[0.28s] ease-out group-hover:scale-y-100"
+                />
                 {/* el índice mono rojo hace de acento, como en las tarjetas de marinos */}
                 <span className="mono w-[20px] flex-none text-[10.5px] tracking-[0.14em] text-red">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="text-[16px] font-medium leading-[1.35]">{name}</span>
+                <span className="text-[16px] font-medium leading-[1.35] transition-transform duration-[0.28s] ease-out group-hover:translate-x-[3px]">
+                  {name}
+                </span>
               </div>
             ))}
           </div>
@@ -69,12 +75,13 @@ export function AgencySection({ d }: { d: Dictionary }) {
             {portNames.map((name) => (
               <span
                 key={name}
-                className="border border-rule bg-white px-[13px] py-[7px] text-[12.5px] font-medium"
+                className="cursor-default border border-rule bg-white px-[13px] py-[7px] text-[12.5px] font-medium transition-[background,border-color,color,transform] duration-[0.22s] hover:-translate-y-[2px] hover:border-navy hover:bg-navy hover:text-paper"
               >
                 {name}
               </span>
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@ export const en: Dictionary = {
     ports: "Ports",
     brochure: "Brochure",
     ctaQuote: "REQUEST A QUOTE",
-    langNext: "ESPAÑOL",
+    langNext: "ES",
     langTitle: "Cambiar a español",
     menu: "MENU",
     close: "CLOSE",

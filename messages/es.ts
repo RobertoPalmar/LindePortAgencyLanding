@@ -18,7 +18,7 @@ export const es = {
     ports: "Puertos",
     brochure: "Brochure",
     ctaQuote: "SOLICITAR COTIZACIÓN",
-    langNext: "ENGLISH",
+    langNext: "EN",
     langTitle: "Switch to English",
     menu: "MENÚ",
     close: "CERRAR",
