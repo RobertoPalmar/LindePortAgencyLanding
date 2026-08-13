@@ -9,11 +9,9 @@ export function LaunchSection({ d }: { d: Dictionary }) {
 
       <section id="launch" className="relative overflow-hidden bg-navy text-paper">
         {/* Vídeo a sangre detrás de toda la banda, con velo navy para la legibilidad */}
-        <BackgroundVideo src="/photos/launch/launch.mp4" className="saturate-150" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-navy/[0.88] mix-blend-normal"
-        />
+        <BackgroundVideo src="/photos/launch/ship-launch.mp4" className="saturate-[2]" />
+        {/* velo al 80%: deja pasar color sin comprometer la legibilidad del texto */}
+        <div aria-hidden="true" className="absolute inset-0 bg-navy/80" />
         <div className="mono absolute right-0 top-0 z-10 bg-red px-6 py-[15px] text-[12px] tracking-[0.18em] text-white">
           24 / 7 / 365
         </div>

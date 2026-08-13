@@ -79,8 +79,9 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
   `prefers-reduced-motion`. `BackgroundVideo` acepta `clipSeconds` para recortar el bucle a los
   primeros N segundos sin tocar el archivo.
 - **Agencia (01)**: rediseñada respecto al prototipo para que no quede vacía — filete rojo + eyebrow,
-  índices mono rojos `01–10` en la lista (mismo patrón que las tarjetas de marinos), filas con hover
-  y una **hélice de línea** (`PropellerMark`) llenando la esquina inferior derecha.
+  tirador rojo sobre la foto, índices mono rojos `01–10` en la lista (mismo patrón que las tarjetas
+  de marinos), filas con hover, un bloque de cierre con los 5 puertos bajo el rótulo `COBERTURA`, y
+  un **salvavidas de línea** (`LifebuoyMark`) llenando la esquina inferior derecha.
 - **Contacto**: la decoración es un **ancla de línea** en lugar de la retícula de carta náutica.
   Nota: el README de marca prohíbe explícitamente anclas y timones — cambio pedido por el cliente.
 - **Header**: por debajo de 640px el CTA rojo vive dentro del menú full-screen (en el prototipo,
@@ -92,10 +93,13 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
    mono; nunca stock genérico. Ya conectados: agencia, vídeo de launch, las 3 de galería y los
    5 puertos (`public/photos/`). Las fotos no asignadas están en `design-assets/photos/`, fuera de
    `public/`, para no desplegar peso muerto.
-2. **Comprimir `public/photos/launch/launch.mp4`** (8,5 MB). Recomendado: H.264 ~1280px, CRF 28,
-   sin audio, y un `poster` extraído del primer fotograma (`preload="metadata"` ya está puesto).
-   El material de origen sin usar vive en `design-assets/`; `design-assets/video/` está en
-   `.gitignore` porque `launch service.mp4` pesa 101 MB y GitHub rechaza archivos de más de 100 MB.
+2. **Comprimir el vídeo de Launch.** `public/photos/launch/ship-launch.mp4` pesa 78,7 MB en bruto y
+   **está en `.gitignore`**: la web lo necesita para verse en local, pero no entra al repo hasta
+   tener una versión de ~2-3 MB. Recomendado:
+   `ffmpeg -i ship-launch.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 28 -movflags +faststart out.mp4`
+   más un `poster` del primer fotograma (`preload="metadata"` ya está puesto). Al sustituirlo,
+   quitar la línea correspondiente de `.gitignore`.
+   El material de origen sin usar vive en `design-assets/` (también ignorado en el caso de vídeo).
 3. **PDFs del brochure**: `public/brochure/linde-brochure-es.pdf` y `-en.pdf` (los enlaces existen).
 4. **Datos de contacto reales** en `messages/*.ts` (`contact.blocks`) y en el `contactPoint` /
    `address` del JSON-LD.

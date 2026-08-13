@@ -10,6 +10,9 @@ npm-debug.log*
 next-env.d.ts
 tsconfig.tsbuildinfo
 
-# Material de origen sin usar en la web. El vídeo de prueba pesa 101 MB y GitHub
-# rechaza archivos de más de 100 MB: se queda solo en local.
+# Material de origen sin usar en la web (se queda solo en local).
 design-assets/video/
+
+# Vídeo de fondo de Launch: 78,7 MB en bruto. Fuera del repo hasta tener la
+# versión comprimida (~2-3 MB). Ver README, "Pendiente".
+public/photos/launch/ship-launch.mp4

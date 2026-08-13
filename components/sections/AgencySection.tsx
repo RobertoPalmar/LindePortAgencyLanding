@@ -1,6 +1,7 @@
 import type { Dictionary } from "@/lib/i18n";
+import { portNames } from "@/lib/ports";
 import { ImageFrame } from "@/components/ui/ImageFrame";
-import { PropellerMark } from "@/components/ui/PropellerMark";
+import { LifebuoyMark } from "@/components/ui/LifebuoyMark";
 
 /**
  * 01 — Agencia. Banda a sangre: la foto vertical pone su propio marco y la columna
@@ -12,7 +13,7 @@ export function AgencySection({ d }: { d: Dictionary }) {
       id="agency"
       className="grid border-t border-hair bg-paper lg:grid-cols-[520px_1fr]"
     >
-      {/* Columna izquierda: foto vertical a sangre con placa navy abajo-izquierda */}
+      {/* Columna izquierda: foto vertical a sangre con placa navy y tirador rojo */}
       <div className="relative min-h-[380px] overflow-hidden bg-panel-2 lg:min-h-[640px]">
         <ImageFrame
           src="/photos/agency/agency-vertical.jpg"
@@ -20,14 +21,18 @@ export function AgencySection({ d }: { d: Dictionary }) {
           sizes="(max-width: 1023px) 100vw, 520px"
           fillParent
         />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 top-0 h-[76px] w-1 bg-red"
+        />
         <div className="mono absolute bottom-0 left-0 bg-navy px-6 py-4 text-[11.5px] tracking-[0.18em] text-paper">
           {d.agency.plate}
         </div>
       </div>
 
-      <div className="relative overflow-hidden px-[var(--rail)] pb-[72px] pt-16 lg:py-[96px] lg:pb-[104px] lg:pl-16 lg:pr-[72px]">
-        {/* Hélice de línea: llena el aire de la esquina inferior derecha */}
-        <PropellerMark className="pointer-events-none absolute bottom-[-70px] right-[-60px] h-[320px] w-[320px] opacity-70" />
+      <div className="relative flex flex-col overflow-hidden px-[var(--rail)] pb-[72px] pt-16 lg:py-[96px] lg:pb-[104px] lg:pl-16 lg:pr-[72px]">
+        {/* Salvavidas de línea: llena el aire de la esquina inferior derecha */}
+        <LifebuoyMark className="pointer-events-none absolute bottom-[-64px] right-[-52px] h-[340px] w-[340px] rotate-[18deg] opacity-75" />
 
         <div className="relative">
           <div aria-hidden="true" className="h-[2px] w-10 bg-red" />
@@ -51,6 +56,23 @@ export function AgencySection({ d }: { d: Dictionary }) {
                 </span>
                 <span className="text-[16px] font-medium leading-[1.35]">{name}</span>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cierre: dónde se prestan estos servicios */}
+        <div className="relative mt-auto flex flex-col gap-4 border-t-2 border-red pt-6 sm:flex-row sm:items-center sm:gap-8 lg:mt-12">
+          <span className="mono flex-none text-[10.5px] tracking-[0.18em] text-ink-mute">
+            {d.ports.railNote}
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {portNames.map((name) => (
+              <span
+                key={name}
+                className="border border-rule bg-white px-[13px] py-[7px] text-[12.5px] font-medium"
+              >
+                {name}
+              </span>
             ))}
           </div>
         </div>

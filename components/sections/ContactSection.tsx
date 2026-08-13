@@ -22,7 +22,7 @@ export function ContactSection({ d }: { d: Dictionary }) {
             <svg
               viewBox="0 0 200 280"
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-[-24px] right-[26%] h-[280px] w-[200px]"
+              className="pointer-events-none absolute bottom-[-24px] right-[26%] h-[280px] w-[200px] rotate-[14deg]"
               fill="none"
               stroke="#DCD8CC"
               strokeWidth={2.4}
