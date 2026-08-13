@@ -9,8 +9,8 @@ export function Hero({ d }: { d: Dictionary }) {
       <div aria-hidden="true" className="absolute inset-0 bg-navy/[0.82]" />
 
       <div className="rail pointer-events-none relative grid items-center gap-12 pb-6 pt-16 lg:grid-cols-2 lg:pt-[92px]">
-        {/* Una columna: el logo va arriba y el texto centrado; a partir de lg, dos columnas */}
-        <div className="order-2 animate-rise text-center lg:order-1 lg:text-left">
+        {/* Una columna: el logo va arriba y el texto centrado; a partir de lg, logo a la izquierda */}
+        <div className="order-2 animate-rise text-center lg:order-2 lg:text-left">
           <div className="mono text-[12px] tracking-[0.24em] text-pink">{d.hero.eyebrow}</div>
           <h1 className="mt-6 text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-paper lg:text-[60px]">
             {d.hero.title}
@@ -33,7 +33,7 @@ export function Hero({ d }: { d: Dictionary }) {
             </a>
           </div>
         </div>
-        <div className="order-1 flex justify-center lg:order-2">
+        <div className="order-1 flex justify-center lg:order-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand/linde-logo-light.svg"
