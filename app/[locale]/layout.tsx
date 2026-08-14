@@ -8,6 +8,7 @@ import { StatusBar } from "@/components/layout/StatusBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { OrganizationJsonLd } from "@/components/layout/OrganizationJsonLd";
+import { BackToTop } from "@/components/ui/BackToTop";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default function LocaleLayout({
         <Header d={d} locale={locale} />
         {children}
         <Footer d={d} />
+        <BackToTop label={d.nav.backToTop} />
       </body>
     </html>
   );

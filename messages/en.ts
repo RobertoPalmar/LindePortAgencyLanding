@@ -24,6 +24,7 @@ export const en: Dictionary = {
     langTitle: "Cambiar a español",
     menu: "MENU",
     close: "CLOSE",
+    backToTop: "Back to top",
   },
 
   hero: {

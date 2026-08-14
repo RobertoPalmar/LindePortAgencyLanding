@@ -32,6 +32,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Quien pide menos movimiento no quiere que la página se desplace sola */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
     margin: 0;
     background: theme("colors.paper");

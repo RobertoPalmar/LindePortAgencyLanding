@@ -22,6 +22,7 @@ export const es = {
     langTitle: "Switch to English",
     menu: "MENÚ",
     close: "CERRAR",
+    backToTop: "Volver arriba",
   },
 
   hero: {
