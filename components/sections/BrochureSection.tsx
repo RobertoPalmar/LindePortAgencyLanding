@@ -101,8 +101,8 @@ export function BrochureSection({ d }: { d: Dictionary }) {
 
         <div className="relative min-h-[300px] overflow-hidden bg-panel lg:min-h-[420px]">
           <ImageFrame
+            src="/photos/brochure/bifold-mockup.png"
             alt={d.brochure.photoAlt}
-            placeholder="MOCKUP DEL BROCHURE IMPRESO"
             frame="panel"
             sizes="(max-width: 1023px) 100vw, 560px"
             fillParent

@@ -89,10 +89,11 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
 
 ## Pendiente (necesita material del cliente)
 
-1. **Mockup del brochure**: único hueco sin material. Se pinta con marco `#F2F1EC` y una referencia
-   mono; nunca stock genérico. Ya conectados: agencia, vídeo de launch, las 3 de galería y los
-   5 puertos (`public/photos/`). Las fotos no asignadas están en `design-assets/photos/`, fuera de
-   `public/`, para no desplegar peso muerto.
+1. **Imagen de Open Graph**: `app/[locale]/layout.tsx` declara `/og/linde-og.jpg`, pero el archivo
+   no existe, así que las vistas previas al compartir el enlace salen sin imagen. Hace falta un
+   1200×630. Es el único hueco de material que queda: ya están conectados agencia, brochure, las 3
+   de galería y los 5 puertos (`public/photos/`), más los 3 vídeos (`public/video/`). Las fotos no
+   asignadas viven en `design-assets/photos/`, fuera de `public/`, para no desplegar peso muerto.
 2. **Afinar los vídeos.** Viven en `public/video/` y se llaman por la sección que los consume:
    `hero.mp4` (17 MB), `agency.mp4` (sección 01, 6,0 MB) y `launch.mp4` (sección 02,
    1280×720 · 21,6 s · 23,3 MB). `hero.mp4` y `launch.mp4` pesan de más para autoplay: el de Launch
