@@ -3,6 +3,8 @@ import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
 /** Clip del hero. Una línea para cambiarlo. */
 const HERO_VIDEO = "/video/hero.mp4";
+/** Respaldo del hero: cubre la banda hasta que el vídeo puede reproducir. */
+const HERO_POSTER = "/photos/hero/hero-poster.jpg";
 
 export function Hero({ d }: { d: Dictionary }) {
   // Alto de pantalla menos el chrome fijo: la banda de olas cierra justo en el pliegue.
@@ -12,7 +14,12 @@ export function Hero({ d }: { d: Dictionary }) {
       className="relative flex min-h-[calc(100svh-var(--chrome))] flex-col overflow-hidden bg-navy"
     >
       {/* `seamFade` funde en la costura del bucle: el reinicio entra y sale, no salta */}
-      <BackgroundVideo src={HERO_VIDEO} className="saturate-[1.15]" />
+      <BackgroundVideo
+        src={HERO_VIDEO}
+        poster={HERO_POSTER}
+        posterPriority
+        className="saturate-[1.15]"
+      />
       {/* Solo el contraste que el texto necesita: base tenue + degradado arriba y abajo */}
       <div aria-hidden="true" className="absolute inset-0 bg-navy/40" />
       <div
