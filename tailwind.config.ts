@@ -43,12 +43,17 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        /* El carril mide el 100% del riel, así que un 100% lo cruza de punta a punta. */
+        sail: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(100%)" },
+        },
       },
       animation: {
         drift: "drift 16s linear infinite",
         pulse2: "pulse2 2.2s ease-in-out infinite",
         rise: "rise 0.7s ease both",
-        riseSlow: "rise 0.9s ease both",
+        sail: "sail 22s linear infinite",
       },
     },
   },

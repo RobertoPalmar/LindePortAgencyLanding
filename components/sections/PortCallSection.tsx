@@ -1,6 +1,7 @@
 import type { Dictionary } from "@/lib/i18n";
 import { SectionBand } from "@/components/ui/SectionBand";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { VesselMark } from "@/components/ui/VesselMark";
 
 /** 03 — Anatomía de una escala. El hover se resuelve con group-hover: la sección es server. */
 export function PortCallSection({ d }: { d: Dictionary }) {
@@ -14,11 +15,22 @@ export function PortCallSection({ d }: { d: Dictionary }) {
       />
 
       <div className="relative">
-        {/* línea del timeline, a la altura del centro de los dots */}
+        {/*
+         * Derrota del timeline, a la altura del centro de los dots. La línea va
+         * punteada como una ruta de carta náutica, y el buque la recorre: la
+         * escala es un viaje, de pre-arribo a zarpe. Queda por debajo de la
+         * grilla, así que el buque desaparece detrás de cada etapa y reaparece.
+         */}
         <div
           aria-hidden="true"
-          className="absolute left-0 right-0 top-[27px] hidden h-px bg-red opacity-35 lg:block"
-        />
+          className="pointer-events-none absolute left-0 right-0 top-[27px] hidden h-px lg:block"
+        >
+          <div className="h-px w-full bg-[repeating-linear-gradient(to_right,#C8102E_0_10px,transparent_10px_19px)] opacity-45" />
+          {/* Carril al 100%: `translateX(100%)` lleva el buque de punta a punta */}
+          <div className="absolute inset-y-0 left-0 w-full animate-sail motion-reduce:animate-none">
+            <VesselMark className="absolute -top-[11px] left-0 -translate-x-1/2" />
+          </div>
+        </div>
         <div className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {d.portCall.steps.map((s, i) => (
             <div key={s.title} className="group relative pb-[26px]">

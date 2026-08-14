@@ -1,45 +1,61 @@
 import type { Dictionary } from "@/lib/i18n";
 import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
-export function Hero({ d }: { d: Dictionary }) {
-  return (
-    <section id="top" className="relative overflow-hidden bg-navy">
-      {/* Vídeo de fondo con velo navy: el hero del prototipo era navy plano */}
-      <BackgroundVideo src="/photos/launch/ship-launch-2.mp4" className="saturate-[1.6]" />
-      <div aria-hidden="true" className="absolute inset-0 bg-navy/[0.82]" />
+/** Clip del hero. Una línea para cambiarlo. */
+const HERO_VIDEO = "/video/hero.mp4";
 
-      <div className="rail pointer-events-none relative grid items-center gap-12 pb-6 pt-16 lg:grid-cols-2 lg:pt-[92px]">
-        {/* Una columna: el logo va arriba y el texto centrado; a partir de lg, logo a la izquierda */}
-        <div className="order-2 animate-rise text-center lg:order-2 lg:text-left">
-          <div className="mono text-[12px] tracking-[0.24em] text-pink">{d.hero.eyebrow}</div>
-          <h1 className="mt-6 text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-paper lg:text-[60px]">
+export function Hero({ d }: { d: Dictionary }) {
+  // Alto de pantalla menos el chrome fijo: la banda de olas cierra justo en el pliegue.
+  return (
+    <section
+      id="top"
+      className="relative flex min-h-[calc(100svh-var(--chrome))] flex-col overflow-hidden bg-navy"
+    >
+      {/* `seamFade` funde en la costura del bucle: el reinicio entra y sale, no salta */}
+      <BackgroundVideo src={HERO_VIDEO} className="saturate-[1.15]" />
+      {/* Solo el contraste que el texto necesita: base tenue + degradado arriba y abajo */}
+      <div aria-hidden="true" className="absolute inset-0 bg-navy/40" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-navy/55 via-transparent to-navy/70"
+      />
+
+      {/*
+       * `flex-1` reparte el alto sobrante. El padding superior es mayor que el
+       * inferior a propósito: sobre una caja centrada, esa asimetría baja el
+       * bloque sin anclarlo al pie, así en pantallas muy altas sigue equilibrado.
+       */}
+      <div className="rail pointer-events-none relative flex flex-1 items-center pb-14 pt-24 lg:pb-20 lg:pt-[200px]">
+        {/*
+         * En móvil el bloque es la pantalla entera. A partir de lg se retira a una
+         * columna angosta a la izquierda y baja de escala: el centro y la derecha
+         * quedan para el vídeo, que es el protagonista de la banda.
+         */}
+        {/* La sombra de texto sustituye al velo: legibilidad sin oscurecer el fotograma */}
+        <div className="mx-auto max-w-[680px] animate-rise text-center [text-shadow:0_2px_16px_rgba(12,29,56,0.85)] lg:mx-0 lg:max-w-[460px] lg:text-left">
+          <div className="mono text-[11.5px] tracking-[0.22em] text-pink lg:text-[10.5px]">
+            {d.hero.eyebrow}
+          </div>
+          <h1 className="mt-5 text-[34px] font-bold leading-[1.08] tracking-[-0.02em] text-paper lg:text-[38px]">
             {d.hero.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-[600px] text-[17px] leading-[1.55] text-onNavy lg:mx-0 lg:text-[19px]">
+          <p className="mx-auto mt-4 max-w-[600px] text-[15.5px] leading-[1.55] text-onNavy-3 lg:mx-0">
             {d.hero.body}
           </p>
-          <div className="pointer-events-auto mt-[38px] flex flex-wrap justify-center gap-[14px] lg:justify-start">
+          <div className="pointer-events-auto mt-8 flex flex-wrap justify-center gap-[12px] [text-shadow:none] lg:justify-start">
             <a
               href="#contact"
-              className="bg-red px-[30px] py-[17px] text-[13px] font-semibold tracking-[0.1em] text-white transition-[background,transform,box-shadow] duration-200 hover:-translate-y-[2px] hover:bg-red-hover hover:shadow-cta"
+              className="bg-red px-[24px] py-[14px] text-[12px] font-semibold tracking-[0.1em] text-white transition-[background,transform,box-shadow] duration-200 hover:-translate-y-[2px] hover:bg-red-hover hover:shadow-cta"
             >
               {d.hero.ctaContact}
             </a>
             <a
               href="#agency"
-              className="border border-navy-outline px-[30px] py-[17px] text-[13px] font-semibold tracking-[0.1em] text-paper transition-[border-color,background] duration-200 hover:border-paper hover:bg-paper/10"
+              className="border border-navy-outline px-[24px] py-[14px] text-[12px] font-semibold tracking-[0.1em] text-paper transition-[border-color,background] duration-200 hover:border-paper hover:bg-paper/10"
             >
               {d.hero.ctaServices}
             </a>
           </div>
-        </div>
-        <div className="order-1 flex justify-center lg:order-1">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/linde-logo-light.svg"
-            alt="Linde Port Agency"
-            className="w-[280px] animate-riseSlow md:w-[380px] lg:w-[500px]"
-          />
         </div>
       </div>
 

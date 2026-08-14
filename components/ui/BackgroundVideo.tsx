@@ -6,6 +6,13 @@ type Props = {
   src: string;
   /** recorta el bucle a los primeros N segundos (sin tocar el archivo) */
   clipSeconds?: number;
+  /** primer fotograma mientras carga, o si el autoplay está bloqueado */
+  poster?: string;
+  /**
+   * Funde a transparente en la costura del bucle. Desactívalo con clips que ya
+   * cierran donde abren: el fundido se nota más que el propio salto.
+   */
+  seamFade?: boolean;
   /** clases de filtro/encaje; el vídeo es decorativo y va a sangre */
   className?: string;
 };
@@ -16,10 +23,16 @@ const FADE = 0.6;
 /**
  * Vídeo de fondo en bucle, silenciado y decorativo.
  * - `clipSeconds` limita el bucle a los primeros segundos del archivo.
- * - Funde a oscuro en la costura del bucle y vuelve a entrar, para que el salto no se note.
+ * - Con `seamFade`, funde a transparente en la costura del bucle y vuelve a entrar.
  * - Con `prefers-reduced-motion: reduce` se queda en el primer fotograma.
  */
-export function BackgroundVideo({ src, clipSeconds, className = "" }: Props) {
+export function BackgroundVideo({
+  src,
+  clipSeconds,
+  poster,
+  seamFade = true,
+  className = "",
+}: Props) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -55,22 +68,27 @@ export function BackgroundVideo({ src, clipSeconds, className = "" }: Props) {
         video.currentTime = 0;
         return;
       }
-      video.style.opacity = end - video.currentTime < FADE ? "0" : "1";
+      if (seamFade) {
+        video.style.opacity = end - video.currentTime < FADE ? "0" : "1";
+      }
     };
 
     apply();
-    video.addEventListener("timeupdate", onTimeUpdate);
+    // Sin recorte ni fundido, el atributo `loop` nativo ya cierra el bucle solo.
+    const needsTimeUpdate = seamFade || clipSeconds !== undefined;
+    if (needsTimeUpdate) video.addEventListener("timeupdate", onTimeUpdate);
     mq.addEventListener("change", apply);
     return () => {
       video.removeEventListener("timeupdate", onTimeUpdate);
       mq.removeEventListener("change", apply);
     };
-  }, [clipSeconds]);
+  }, [clipSeconds, seamFade]);
 
   return (
     <video
       ref={ref}
       src={src}
+      poster={poster}
       autoPlay
       muted
       loop

@@ -6,11 +6,19 @@
   :root {
     /* Riel de contenido. 72px es la medida del prototipo (>=1280). */
     --rail: 24px;
+
+    /*
+     * Alto de la barra de estado (33px) + header sticky (73px con el logo a 44px).
+     * El hero lo descuenta de la pantalla para ocupar exactamente lo que queda.
+     */
+    --chrome: 106px;
   }
 
   @media (min-width: 1024px) {
     :root {
       --rail: 48px;
+      /* el logo del header pasa a 60px */
+      --chrome: 122px;
     }
   }
 

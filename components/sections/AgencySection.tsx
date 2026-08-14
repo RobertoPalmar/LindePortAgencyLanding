@@ -1,25 +1,45 @@
 import type { Dictionary } from "@/lib/i18n";
 import { portNames } from "@/lib/ports";
-import { ImageFrame } from "@/components/ui/ImageFrame";
+import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 import { LifebuoyMark } from "@/components/ui/LifebuoyMark";
 
 /**
- * 01 — Agencia. Banda a sangre: la foto vertical pone su propio marco y la columna
- * de texto su propio padding (no usa el riel de `SectionBand`).
+ * 01 — Agencia. Banda a sangre: la columna de medios pone su propio marco y la
+ * columna de texto su propio padding (no usa el riel de `SectionBand`).
  */
 export function AgencySection({ d }: { d: Dictionary }) {
   return (
     <section id="agency" className="border-t border-hair bg-paper">
       {/* Dentro del riel: la banda ya no llega al borde del viewport */}
-      <div className="rail grid lg:grid-cols-[480px_1fr]">
-        {/* Columna izquierda: foto con filete navy lateral, placa y tirador rojo */}
-        <div className="group relative min-h-[380px] overflow-hidden border-l-[10px] border-navy bg-panel-2 lg:min-h-[640px]">
-        <ImageFrame
-          src="/photos/agency/agency-vertical.jpg"
-          alt={d.agency.photoAlt}
-          sizes="(max-width: 1023px) 100vw, 520px"
-          fillParent
+      <div className="rail grid lg:grid-cols-[680px_1fr]">
+        {/*
+         * Columna de medios: vídeo velado como el hero, logo centrado y placa.
+         * `self-center` + alto fijo: sin salir del estirado, el grid lo llevaría a
+         * igualar la columna de texto, que es la que manda la altura de la banda.
+         */}
+        <div className="group relative min-h-[320px] overflow-hidden border-l-[10px] border-navy bg-navy lg:h-[720px] lg:min-h-0 lg:self-center">
+        {/* La foto vertical queda de póster: cubre la carga y el autoplay bloqueado */}
+        <BackgroundVideo
+          src="/video/agency.mp4"
+          poster="/photos/agency/agency-vertical.jpg"
+          seamFade={false}
+          className="saturate-[1.15]"
         />
+        {/* Mismo velo que el hero, para que las dos bandas de vídeo se lean igual */}
+        <div aria-hidden="true" className="absolute inset-0 bg-navy/40" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-b from-navy/55 via-transparent to-navy/70"
+        />
+        {/* El logo se centra en el hueco y respeta la placa del pie */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-10 pb-14">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/linde-logo-light.svg"
+            alt="Linde Port Agency"
+            className="w-[64%] max-w-[340px]"
+          />
+        </div>
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-0 top-0 h-[76px] w-1 bg-red"
