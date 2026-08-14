@@ -26,20 +26,29 @@ export function BrochureSection({ d }: { d: Dictionary }) {
 
   return (
     <SectionBand id="brochure" tone="paper">
-      <div className="relative grid overflow-hidden border border-hair bg-white lg:grid-cols-[1.15fr_1fr]">
-        {/* rosa de los vientos */}
-        <svg
-          viewBox="0 0 240 240"
+      <div className="relative grid border border-hair bg-white lg:grid-cols-[1.15fr_1fr]">
+        {/*
+         * La rosa de los vientos asoma por fuera de la tarjeta, así que necesita
+         * recorte. Va en su propia capa y no en la tarjeta: ahí recortaba también
+         * el desplegable de idioma, que se abre por debajo del botón.
+         */}
+        <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-[-52px] left-[-46px] h-[240px] w-[240px] opacity-50"
-          fill="none"
-          stroke="#E4E1D8"
-          strokeWidth={1.2}
+          className="pointer-events-none absolute inset-0 overflow-hidden"
         >
-          <circle cx="120" cy="120" r="104" />
-          <circle cx="120" cy="120" r="74" />
-          <path d="M120 4v232M4 120h232M42 42l156 156M198 42L42 198" />
-        </svg>
+          {/* rosa de los vientos */}
+          <svg
+            viewBox="0 0 240 240"
+            className="absolute bottom-[-52px] left-[-46px] h-[240px] w-[240px] opacity-50"
+            fill="none"
+            stroke="#E4E1D8"
+            strokeWidth={1.2}
+          >
+            <circle cx="120" cy="120" r="104" />
+            <circle cx="120" cy="120" r="74" />
+            <path d="M120 4v232M4 120h232M42 42l156 156M198 42L42 198" />
+          </svg>
+        </div>
 
         <div className="relative px-8 pb-[54px] pt-[58px] lg:px-14">
           <div className="mono text-[12px] tracking-[0.2em] text-red">{d.brochure.eyebrow}</div>
