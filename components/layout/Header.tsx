@@ -139,7 +139,8 @@ export function Header({ d, locale }: Props) {
               </a>
             ))}
             <div className="mt-8 flex flex-col gap-4">
-              <LangButton d={d} next={next} />
+              {/* Cierra el panel: si queda abierto, tapa la posición que acabamos de conservar */}
+              <LangButton d={d} next={next} onNavigate={() => setOpen(false)} />
               <a
                 href="#contact"
                 onClick={() => setOpen(false)}
@@ -155,12 +156,24 @@ export function Header({ d, locale }: Props) {
   );
 }
 
-function LangButton({ d, next }: { d: Dictionary; next: Locale }) {
+function LangButton({
+  d,
+  next,
+  onNavigate,
+}: {
+  d: Dictionary;
+  next: Locale;
+  onNavigate?: () => void;
+}) {
   return (
     <Link
       href={`/${next}`}
       title={d.nav.langTitle}
       hrefLang={next}
+      // `Link` sube al principio en cada navegación: sin esto, cambiar de idioma
+      // devuelve al hero en vez de dejarte donde estabas leyendo.
+      scroll={false}
+      onClick={onNavigate}
       className="mono flex items-center justify-center gap-2 border border-rule-3 px-[14px] py-[9px] text-[11px] tracking-[0.12em] text-navy transition-[background,color,border-color] duration-200 hover:border-navy hover:bg-navy hover:text-white"
     >
       <svg
