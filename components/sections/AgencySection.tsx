@@ -13,7 +13,12 @@ export function AgencySection({ d }: { d: Dictionary }) {
       {/* Dentro del riel: la banda ya no llega al borde del viewport */}
       <div className="rail grid lg:grid-cols-[680px_1fr]">
         {/*
-         * Columna de medios: vídeo velado como el hero, logo centrado y placa.
+         * Columna de medios: el vídeo a color pleno y la placa al pie.
+         *
+         * Va sin velo ni realce de saturación, al revés que el hero. Allí el velo
+         * sostiene la legibilidad del titular blanco que va encima; acá no hay
+         * nada encima que legibilizar —la placa trae su propio fondo navy— así
+         * que oscurecer solo restaría. El vídeo es el contenido de la banda.
          * `self-center` + alto fijo: sin salir del estirado, el grid lo llevaría a
          * igualar la columna de texto, que es la que manda la altura de la banda.
          */}
@@ -23,23 +28,7 @@ export function AgencySection({ d }: { d: Dictionary }) {
           src="/video/agency.mp4"
           poster="/photos/agency/agency-vertical.jpg"
           seamFade={false}
-          className="saturate-[1.15]"
         />
-        {/* Mismo velo que el hero, para que las dos bandas de vídeo se lean igual */}
-        <div aria-hidden="true" className="absolute inset-0 bg-navy/40" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-b from-navy/55 via-transparent to-navy/70"
-        />
-        {/* El logo se centra en el hueco y respeta la placa del pie */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-10 pb-14">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/linde-logo-light.svg"
-            alt="Linde Port Agency"
-            className="w-[64%] max-w-[340px]"
-          />
-        </div>
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-0 top-0 h-[76px] w-1 bg-red"
