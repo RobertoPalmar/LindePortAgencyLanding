@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { otherLocale } from "@/lib/i18n";
+import { scrollToTop } from "@/lib/scroll";
 
 type Props = { d: Dictionary; locale: Locale };
 
@@ -43,6 +44,20 @@ export function Header({ d, locale }: Props) {
     return () => obs.disconnect();
   }, []);
 
+  /**
+   * El logo sigue siendo un enlace al inicio, así que conserva lo que un enlace
+   * da gratis: abrir en pestaña nueva, menú contextual, copiar dirección, y un
+   * destino real si el JS no cargó. Solo se intercepta el clic simple, que es
+   * el único caso en el que ya estamos en la página de destino: ahí no hay nada
+   * que navegar, se sube con scroll suave y la URL queda limpia.
+   */
+  const onLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    setOpen(false);
+    scrollToTop();
+  };
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
@@ -57,7 +72,12 @@ export function Header({ d, locale }: Props) {
   return (
     <header className="sticky top-0 z-20 border-b border-hair bg-white">
       <div className="rail flex items-center justify-between py-[14px]">
-        <Link href={`/${locale}#top`} className="flex items-center" aria-label="Linde Port Agency">
+        <Link
+          href={`/${locale}`}
+          onClick={onLogoClick}
+          className="flex items-center"
+          aria-label="Linde Port Agency"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/brand/linde-logo-horizontal.svg"
@@ -117,8 +137,16 @@ export function Header({ d, locale }: Props) {
           aria-modal="true"
         >
           <div className="rail flex items-center justify-between border-b border-hair py-[14px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/linde-logo-horizontal.svg" alt="Linde Port Agency" className="h-[44px] w-auto" />
+            {/* Mismo gesto que en la barra: cierra el panel y sube al inicio */}
+            <Link
+              href={`/${locale}`}
+              onClick={onLogoClick}
+              className="flex items-center"
+              aria-label="Linde Port Agency"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/linde-logo-horizontal.svg" alt="Linde Port Agency" className="h-[44px] w-auto" />
+            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}

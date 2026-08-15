@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { scrollToTop } from "@/lib/scroll";
 
 /** Píxeles de scroll antes de que el botón aparezca: pasado el primer pliegue. */
 const REVEAL_AT = 600;
@@ -22,15 +23,10 @@ export function BackToTop({ label }: { label: string }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const toTop = () => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
-  };
-
   return (
     <button
       type="button"
-      onClick={toTop}
+      onClick={scrollToTop}
       aria-label={label}
       title={label}
       // Oculto también para el teclado y los lectores mientras está invisible
