@@ -58,14 +58,18 @@ export function BackgroundVideo({
     if (!video || !poster) return;
 
     // Puede haber llegado a tener datos antes de que montáramos el listener.
-    if (video.readyState >= 3) {
+    if (video.readyState >= 2) {
       setReady(true);
       return;
     }
 
     const onReady = () => setReady(true);
-    video.addEventListener("canplay", onReady);
-    return () => video.removeEventListener("canplay", onReady);
+    // `canplay` exige readyState 3. Safari se queda en 2 hasta que la
+    // reproducción avanza de verdad, así que `loadeddata` (readyState 2, ya hay
+    // un fotograma decodificado) y `playing` son los que retiran el póster ahí.
+    const events = ["loadeddata", "canplay", "playing"] as const;
+    events.forEach((e) => video.addEventListener(e, onReady));
+    return () => events.forEach((e) => video.removeEventListener(e, onReady));
   }, [poster]);
 
   useEffect(() => {
@@ -74,20 +78,66 @@ export function BackgroundVideo({
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    /**
+     * Intento de reproducción. Safari rechaza la promesa en más casos que el
+     * resto (Low Power Mode, ajuste "Never Auto-Play" por sitio, elemento aún
+     * fuera de pantalla), así que el rechazo no se descarta: se reintenta.
+     */
+    const attempt = () => {
+      if (mq.matches) return;
+      // Safari mira la propiedad, no el atributo: sin esto, un vídeo con pista
+      // de audio se considera no silenciado y la reproducción queda bloqueada.
+      video.muted = true;
+      void video.play().catch(() => {
+        /* bloqueado: los reintentos de abajo vuelven a probar */
+      });
+    };
+
     const apply = () => {
       if (mq.matches) {
         video.pause();
         video.style.opacity = "1";
       } else {
-        void video.play().catch(() => {
-          /* autoplay bloqueado: se queda el póster, o el primer fotograma */
-        });
+        attempt();
       }
     };
 
+    /**
+     * WebKit solo arranca un `autoplay` cuando el elemento está en pantalla y
+     * lo pausa al salir. Reintentamos al entrar en el viewport para que las
+     * secciones bajo el pliegue arranquen al llegar a ellas.
+     */
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) attempt();
+      },
+      { threshold: 0.01 },
+    );
+    observer.observe(video);
+
+    /**
+     * Último recurso: si el autoplay quedó bloqueado por configuración del
+     * navegador, el primer gesto del usuario en la página lo desbloquea. Se
+     * escucha una sola vez y en captura, sin interferir con clics ni scroll.
+     */
+    const onGesture = () => attempt();
+    const gestures = ["pointerdown", "touchstart", "keydown", "scroll"] as const;
+    const gestureOpts = { passive: true, capture: true } as const;
+    gestures.forEach((e) => window.addEventListener(e, onGesture, gestureOpts));
+
+    // Volver a la pestaña tras un rato en segundo plano también deja el vídeo parado.
+    const onVisible = () => {
+      if (document.visibilityState === "visible") attempt();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
     /** Fin efectivo del bucle: el recorte o la duración real, lo que sea menor. */
     const clipEnd = () => {
-      const duration = Number.isFinite(video.duration) ? video.duration : Infinity;
+      // Antes de tener metadata la duración puede ser NaN o 0: con 0, el bucle
+      // reiniciaría en cada `timeupdate` y el vídeo no saldría del primer fotograma.
+      const duration = video.duration > 0 && Number.isFinite(video.duration)
+        ? video.duration
+        : Infinity;
       return clipSeconds ? Math.min(clipSeconds, duration) : duration;
     };
 
@@ -112,6 +162,9 @@ export function BackgroundVideo({
     if (needsTimeUpdate) video.addEventListener("timeupdate", onTimeUpdate);
     mq.addEventListener("change", apply);
     return () => {
+      observer.disconnect();
+      gestures.forEach((e) => window.removeEventListener(e, onGesture, gestureOpts));
+      document.removeEventListener("visibilitychange", onVisible);
       video.removeEventListener("timeupdate", onTimeUpdate);
       mq.removeEventListener("change", apply);
     };
@@ -127,7 +180,10 @@ export function BackgroundVideo({
         muted
         loop
         playsInline
-        preload="metadata"
+        /* `metadata` deja a Safari en readyState 1: nunca llega a reproducir ni
+           a emitir los eventos que retiran el póster. El vídeo es el fondo de
+           la banda, así que su descarga es la prioridad, no un extra. */
+        preload="auto"
         aria-hidden="true"
         tabIndex={-1}
         style={{ opacity: 1, transition: `opacity ${FADE}s ease-in-out` }}
