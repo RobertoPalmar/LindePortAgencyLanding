@@ -14,7 +14,14 @@ export function PortCallSection({ d }: { d: Dictionary }) {
         bodyMax={420}
       />
 
-      <div className="relative">
+      {/*
+       * `overflow-hidden` recorta la derrota del buque. El carril mide el ancho
+       * completo y se desplaza otro tanto, así que sin recorte su caja termina
+       * al doble del riel y estira el documento: aparece una barra de scroll
+       * horizontal en toda la página. Recortando acá, además, el buque entra y
+       * sale por los bordes en vez de flotar fuera de la sección.
+       */}
+      <div className="relative overflow-hidden">
         {/*
          * Derrota del timeline, a la altura del centro de los dots. La línea va
          * punteada como una ruta de carta náutica, y el buque la recorre: la
