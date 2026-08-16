@@ -75,7 +75,10 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
 ### Desvíos deliberados respecto al prototipo
 
 - **Galería**: el marco principal (STS) va en **vertical** (440×700, dos filas de 340px en vez de
-  270px), porque la foto elegida es vertical. Los otros dos marcos se apilan al lado.
+  270px). Los otros dos marcos se apilan al lado. La foto de STS es apaisada y `object-cover` la
+  recorta al centro: la composición aguanta porque los dos cascos convergen hacia el horizonte y
+  la franja central sigue leyéndose como buque a buque. Si se cambia por otra apaisada, hay que
+  mirar el recorte antes de darla por buena.
 - **Launch**: en vez de la franja superior de foto, un **vídeo de fondo a sangre en toda la banda**
   (`saturate-150`) con velo navy al 88% para la legibilidad y el sello rojo `24 / 7 / 365` arriba a
   la derecha. Funde a oscuro en la costura del bucle y se queda en el primer fotograma con
