@@ -34,8 +34,7 @@ export async function submitRequest(
   if (!parsed.success) return { status: "invalid" };
 
   try {
-    // TODO: enviar a la mesa de operaciones + copia a cotizaciones.
-    // Los correos reales están pendientes de confirmar por el cliente.
+    // TODO: enviar a CONTACT.email. Falta el proveedor de correo, no la dirección.
     console.info("[linde] solicitud de escala", {
       ...parsed.data,
       eta: parsed.data.eta.toISOString(),

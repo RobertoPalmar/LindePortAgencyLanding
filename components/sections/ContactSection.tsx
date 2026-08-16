@@ -57,7 +57,16 @@ export function ContactSection({ d }: { d: Dictionary }) {
               {d.contact.blocks.map((b) => (
                 <div key={b.label} className="border-b border-hair-2 pb-4">
                   <div className="mono text-[11px] tracking-[0.18em] text-ink-mute">{b.label}</div>
-                  <div className="mt-[7px] text-[17px] font-semibold">{b.value}</div>
+                  {/*
+                   * Cada canal va enlazado: en el móvil se marca o se escribe de
+                   * un toque, que es desde donde se lee una web de agencia.
+                   */}
+                  <a
+                    href={b.href}
+                    className="mt-[7px] inline-block text-[17px] font-semibold transition-colors duration-[0.18s] hover:text-red"
+                  >
+                    {b.value}
+                  </a>
                 </div>
               ))}
             </div>

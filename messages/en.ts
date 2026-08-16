@@ -1,4 +1,5 @@
 import type { Dictionary } from "@/lib/i18n";
+import { CONTACT } from "@/lib/contact";
 
 export const en: Dictionary = {
   meta: {
@@ -256,9 +257,8 @@ export const en: Dictionary = {
     title: "One point of contact for every port call",
     body: "Send us the vessel, the port and the ETA. Our operations desk answers around the clock, every day of the year.",
     blocks: [
-      { label: "OPERATIONS · 24 HOURS", value: "email to be confirmed" },
-      { label: "QUOTES & CHARTERING", value: "email to be confirmed" },
-      { label: "HEAD OFFICE", value: "address to be confirmed" },
+      { label: "OPERATIONS · 24 HOURS", value: CONTACT.phone, href: CONTACT.phoneHref },
+      { label: "EMAIL", value: CONTACT.email, href: CONTACT.emailHref },
     ],
     form: {
       name: "NAME",

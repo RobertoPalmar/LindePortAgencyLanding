@@ -29,6 +29,8 @@ components/sections/       las 10 bandas de contenido
 components/ui/             SectionBand · SectionHeader · Eyebrow · LineIcon · ImageFrame
 lib/i18n.ts                locales, diccionarios, otherLocale
 lib/ports.ts               nombres y fotos de los 5 puertos
+lib/contact.ts             teléfono y correo: fuente única, no se traducen
+lib/scroll.ts              subida al inicio (logo del header y BackToTop)
 messages/es.ts · en.ts     todos los copys ES/EN (arrays de contenido incluidos)
 middleware.ts              negociación de locale (/ → /es)
 public/brand · photos · brochure · og
@@ -67,7 +69,8 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
 - [x] `aria-current` en el ancla activa, `role="menu"`/`aria-expanded` en el desplegable.
 - [ ] 12 huecos de imagen conectados a material real — **11 de 12**; falta el mockup del brochure
       (el hueco del hero está retirado por diseño).
-- [ ] Correos, teléfono y dirección reales sustituyendo los "por confirmar".
+- [x] Datos de contacto reales: teléfono y correo en [lib/contact.ts](lib/contact.ts). Sin dirección
+      postal por decisión de negocio — la agencia opera en red, no desde una oficina principal.
 
 ### Desvíos deliberados respecto al prototipo
 
@@ -100,15 +103,15 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
    va a ~8,6 Mbps y baja a ~3 MB sin pérdida visible, y el del hero es el peor caso porque bloquea
    la primera pantalla. Para ambos:
    `ffmpeg -i entrada.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 28 -movflags +faststart salida.mp4`.
-   Falta además un `poster` del primer fotograma para hero y Launch (la sección 01 ya usa
-   `agency-vertical.jpg`; `preload="metadata"` está puesto en los tres).
+   Los tres ya están en faststart (`moov` al principio) y van con `preload="auto"`: Safari se queda
+   en `readyState 1` con `metadata` y nunca llega a reproducir. Falta el `poster` de Launch; el del
+   hero es el primer fotograma del propio vídeo —si cambia `hero.mp4`, hay que regenerarlo con
+   `ffmpeg -i public/video/hero.mp4 -vframes 1 -q:v 3 public/photos/hero/hero-poster.jpg -y`— y la
+   sección 01 usa `agency-vertical.jpg`.
    El material de origen sin usar vive en `design-assets/` (la carpeta `video/` está ignorada).
 3. **PDFs del brochure**: `public/brochure/linde-brochure-es.pdf` y `-en.pdf` (los enlaces existen).
-4. **Datos de contacto reales** en `messages/*.ts` (`contact.blocks`) y en el `contactPoint` /
-   `address` del JSON-LD.
-5. **Envío del formulario**: [app/[locale]/actions.ts](app/[locale]/actions.ts) valida y registra en
-   consola; falta conectar al correo de la mesa de operaciones + copia a cotizaciones (pendientes
-   de confirmar) o al CRM.
-6. **Favicon e imagen OG**: hoy el favicon apunta al logo vertical; el `ship-favicon.svg` del
+4. **Envío del formulario**: [app/[locale]/actions.ts](app/[locale]/actions.ts) valida y registra en
+   consola; falta el proveedor de correo para enviar a `CONTACT.email`, o la conexión al CRM.
+5. **Favicon e imagen OG**: hoy el favicon apunta al logo vertical; el `ship-favicon.svg` del
    proyecto de marca y `public/og/linde-og.jpg` están pendientes.
-7. **Dominio** en `metadataBase` (hoy `https://lindeportagency.com`).
+6. **Dominio** en `metadataBase` (hoy `https://lindeportagency.com`).

@@ -1,3 +1,5 @@
+import { CONTACT } from "@/lib/contact";
+
 export const es = {
   meta: {
     title: "Linde Port Agency — Servicios portuarios de clase mundial",
@@ -258,9 +260,8 @@ export const es = {
     title: "Un solo punto de contacto para cada escala",
     body: "Indíquenos el buque, el puerto y el ETA. Nuestra mesa de operaciones responde a toda hora, todos los días del año.",
     blocks: [
-      { label: "OPERACIONES · 24 HORAS", value: "correo por confirmar" },
-      { label: "COTIZACIONES Y FLETAMENTO", value: "correo por confirmar" },
-      { label: "OFICINA PRINCIPAL", value: "dirección por confirmar" },
+      { label: "OPERACIONES · 24 HORAS", value: CONTACT.phone, href: CONTACT.phoneHref },
+      { label: "CORREO", value: CONTACT.email, href: CONTACT.emailHref },
     ],
     form: {
       name: "NOMBRE",
