@@ -1,4 +1,4 @@
-name = "linde-port-agency"
+name = "linde-port-agency-landing"
 pages_build_output_dir = ".vercel/output/static"
 
 # nodejs_compat es obligatorio para @cloudflare/next-on-pages: sin la bandera,
