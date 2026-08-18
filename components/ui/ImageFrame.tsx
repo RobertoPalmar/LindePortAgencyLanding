@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 
 type Props = {
   src?: string;
+  /** segunda foto que sustituye a `src` en hover, con fundido cruzado */
+  hoverSrc?: string;
   alt: string;
   /** texto mono de referencia mientras no llega la foto real */
   placeholder?: string;
@@ -28,6 +30,7 @@ const frames = {
  */
 export function ImageFrame({
   src,
+  hoverSrc,
   alt,
   placeholder,
   sizes = "100vw",
@@ -43,14 +46,29 @@ export function ImageFrame({
   return (
     <div className={`group ${position} overflow-hidden ${frames[frame]} ${className}`} style={style}>
       {src ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-cover transition-transform duration-[0.7s] ease-out group-hover:scale-[1.06]"
-        />
+        <>
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes={sizes}
+            priority={priority}
+            className={`object-cover transition-[transform,opacity] duration-[0.6s] ease-out group-hover:scale-[1.06] ${
+              hoverSrc ? "group-hover:opacity-0" : ""
+            }`}
+          />
+          {hoverSrc ? (
+            // decorativa: el alt lo pone la de abajo, que es la que se lee siempre
+            <Image
+              src={hoverSrc}
+              alt=""
+              aria-hidden="true"
+              fill
+              sizes={sizes}
+              className="object-cover opacity-0 transition-[transform,opacity] duration-[0.6s] ease-out group-hover:scale-[1.06] group-hover:opacity-100"
+            />
+          ) : null}
+        </>
       ) : (
         // arriba a la izquierda: las placas de rótulo van abajo y taparían el texto
         <div className="absolute inset-0 flex items-start p-6">

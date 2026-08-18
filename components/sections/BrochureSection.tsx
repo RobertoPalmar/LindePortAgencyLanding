@@ -109,8 +109,10 @@ export function BrochureSection({ d }: { d: Dictionary }) {
         </div>
 
         <div className="relative min-h-[300px] overflow-hidden bg-panel lg:min-h-[420px]">
+          {/* portada cerrada; en hover funde al mockup abierto */}
           <ImageFrame
-            src="/photos/brochure/bifold-mockup.png"
+            src="/photos/brochure/brochure-cover.jpg"
+            hoverSrc="/photos/brochure/brochure-open.jpg"
             alt={d.brochure.photoAlt}
             frame="panel"
             sizes="(max-width: 1023px) 100vw, 560px"

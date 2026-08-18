@@ -67,8 +67,8 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
 - [x] Olas a 16s, dot de la barra de estado pulsando, entrada del hero.
 - [x] `prefers-reduced-motion` (incluido el contador de cifras) y `:focus-visible`.
 - [x] `aria-current` en el ancla activa, `role="menu"`/`aria-expanded` en el desplegable.
-- [ ] 12 huecos de imagen conectados a material real — **11 de 12**; falta el mockup del brochure
-      (el hueco del hero está retirado por diseño).
+- [x] 12 huecos de imagen conectados a material real (el hueco del hero está retirado por diseño).
+      El marco del brochure lleva dos: portada cerrada y, en hover, el mockup abierto.
 - [x] Datos de contacto reales: teléfono y correo en [lib/contact.ts](lib/contact.ts). Sin dirección
       postal por decisión de negocio — la agencia opera en red, no desde una oficina principal.
 
