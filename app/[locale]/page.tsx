@@ -12,6 +12,11 @@ import { PortsSection } from "@/components/sections/PortsSection";
 import { BrochureSection } from "@/components/sections/BrochureSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
+// Cloudflare Pages ejecuta las rutas en el runtime edge; sin esto, el Server
+// Action del formulario de contacto no tiene dónde correr y el build del
+// adaptador falla.
+export const runtime = "edge";
+
 export default function HomePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const d = getDictionary(params.locale);

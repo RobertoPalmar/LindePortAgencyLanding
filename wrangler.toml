@@ -1,0 +1,7 @@
+name = "linde-port-agency"
+pages_build_output_dir = ".vercel/output/static"
+
+# nodejs_compat es obligatorio para @cloudflare/next-on-pages: sin la bandera,
+# el worker no arranca. La fecha fija la versión del runtime, no la del deploy.
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]

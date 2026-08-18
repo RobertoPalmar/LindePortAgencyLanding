@@ -2,7 +2,7 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
 
 jobs:
@@ -20,7 +20,10 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+
+      # El adaptador corre `next build` por dentro y deja el resultado en
+      # .vercel/output/static, que es lo que lee wrangler.toml.
+      - run: npx @cloudflare/next-on-pages
 
       - name: Deploy
         id: deploy
@@ -28,6 +31,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy ./out --project-name=mi-app
+          command: pages deploy
 
       - run: echo "${{ steps.deploy.outputs.deployment-url }}" >> $GITHUB_STEP_SUMMARY
