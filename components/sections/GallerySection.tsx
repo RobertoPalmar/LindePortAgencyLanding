@@ -20,7 +20,7 @@ export function GallerySection({ d }: { d: Dictionary }) {
       <div className="grid gap-5 lg:grid-cols-[440px_1fr] lg:grid-rows-[340px_340px]">
         <div className="relative aspect-[3/4] overflow-hidden bg-panel-2 lg:row-span-2 lg:aspect-auto">
           <ImageFrame
-            src="/photos/gallery/sts.jpg"
+            src="/photos/gallery/sts-v2.jpg"
             alt={gal1}
             sizes="(max-width: 1023px) 100vw, 440px"
             fillParent
