@@ -1,9 +1,6 @@
-/** @type {import('next').NextConfig} */
+// next.config.mjs
 const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    formats: ["image/avif", "image/webp"],
-  },
+  output: 'export',
+  images: { unoptimized: true },
 };
-
 export default nextConfig;
