@@ -112,9 +112,8 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
    `ffmpeg -i public/video/hero.mp4 -vframes 1 -q:v 3 public/photos/hero/hero-poster.jpg -y`— y la
    sección 01 usa `agency-vertical.jpg`.
    El material de origen sin usar vive en `design-assets/` (la carpeta `video/` está ignorada).
-3. **PDFs del brochure**: `public/brochure/linde-brochure-es.pdf` y `-en.pdf` (los enlaces existen).
-4. **Envío del formulario**: [app/[locale]/actions.ts](app/[locale]/actions.ts) valida y registra en
+3. **Envío del formulario**: [app/[locale]/actions.ts](app/[locale]/actions.ts) valida y registra en
    consola; falta el proveedor de correo para enviar a `CONTACT.email`, o la conexión al CRM.
-5. **Favicon e imagen OG**: hoy el favicon apunta al logo vertical; el `ship-favicon.svg` del
+4. **Favicon e imagen OG**: hoy el favicon apunta al logo vertical; el `ship-favicon.svg` del
    proyecto de marca y `public/og/linde-og.jpg` están pendientes.
-6. **Dominio** en `metadataBase` (hoy `https://lindeportagency.com`).
+5. **Dominio** en `metadataBase` (hoy `https://lindeportagency.com`).
