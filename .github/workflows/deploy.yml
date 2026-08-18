@@ -4,6 +4,10 @@ on:
   push:
     branches: [master]
   pull_request:
+  # Permite relanzar un despliegue desde la pestaña Actions sin tener que
+  # inventarse un commit: el ajuste de production branch de Pages solo se
+  # aplica al siguiente deploy, nunca al que ya está publicado.
+  workflow_dispatch:
 
 jobs:
   deploy:
