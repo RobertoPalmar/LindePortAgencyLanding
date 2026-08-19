@@ -38,14 +38,31 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     metadataBase: new URL("https://lindeportagency.com"),
     alternates: {
       canonical: `/${locale}`,
-      languages: { es: "/es", en: "/en" },
+      // `x-default` es el destino para un idioma que no es ninguno de los dos;
+      // sin él Google elige por su cuenta cuál mostrar.
+      languages: { es: "/es", en: "/en", "x-default": "/es" },
     },
     openGraph: {
       type: "website",
+      url: `/${locale}`,
+      siteName: "Linde Port Agency",
       title: d.meta.title,
       description: d.meta.description,
-      locale,
+      locale: locale === "es" ? "es_ES" : "en_US",
+      images: [{ url: "/og/linde-og.jpg", width: 1200, height: 630, alt: d.meta.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: d.meta.title,
+      description: d.meta.description,
       images: ["/og/linde-og.jpg"],
+    },
+    // `max-image-preview:large` es lo que permite la miniatura grande en
+    // resultados y en Discover; por defecto Google recorta a una en miniatura.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     },
     // Provisional: el `ship-favicon.svg` del proyecto de marca está pendiente de entrega.
     icons: { icon: [{ url: "/brand/linde-logo.svg", type: "image/svg+xml" }] },
