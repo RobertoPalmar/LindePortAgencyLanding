@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { portNames } from "@/lib/ports";
+import { sendPortCallRequest } from "@/lib/email";
 
 export type ContactState = { status: "idle" | "ok" | "invalid" | "error" };
 
@@ -34,14 +35,21 @@ export async function submitRequest(
   if (!parsed.success) return { status: "invalid" };
 
   try {
-    // TODO: enviar a CONTACT.email. Falta el proveedor de correo, no la dirección.
-    console.info("[linde] solicitud de escala", {
-      ...parsed.data,
-      eta: parsed.data.eta.toISOString(),
-      _hp: undefined,
+    const sent = await sendPortCallRequest({
+      name: parsed.data.name,
+      company: parsed.data.company ?? "",
+      email: parsed.data.email,
+      vessel: parsed.data.vessel,
+      port: parsed.data.port,
+      eta: parsed.data.eta,
+      message: parsed.data.message ?? "",
     });
-    return { status: "ok" };
-  } catch {
+
+    // Un "gracias" con el correo sin salir deja al armador esperando respuesta
+    // a algo que nadie recibió: si el envío falla, el formulario lo dice.
+    return { status: sent ? "ok" : "error" };
+  } catch (err) {
+    console.error("[linde] error enviando la solicitud", err);
     return { status: "error" };
   }
 }

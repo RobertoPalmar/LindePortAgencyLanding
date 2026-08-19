@@ -12,3 +12,6 @@ tsconfig.tsbuildinfo
 
 # Material de origen sin usar en la web (se queda solo en local).
 design-assets/video/
+
+# Variables locales de Cloudflare Pages (claves de SendGrid).
+.dev.vars
