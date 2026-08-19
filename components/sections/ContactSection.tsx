@@ -90,7 +90,7 @@ export function ContactSection({ d }: { d: Dictionary }) {
                   ))}
                 </select>
               </label>
-              <Field name="eta" label={f.eta} type="date" required />
+              <TodayField name="requiredDate" label={f.requiredDate} />
             </div>
 
             <ServicePicker f={f} />
@@ -264,6 +264,32 @@ function Field({
     <label className="flex flex-col gap-2">
       <span className="field-label">{label}</span>
       <input type={type} name={name} required={required} className="field" />
+    </label>
+  );
+}
+
+/**
+ * Fecha con el día de hoy ya puesto.
+ *
+ * El valor se asigna al montar y no en el render: el HTML lo genera el servidor
+ * en UTC y quien rellena el formulario puede estar en otro día, así que pintarlo
+ * directamente daría un desajuste de hidratación —y, de noche, una fecha que no
+ * es la de quien mira la pantalla—.
+ */
+function TodayField({ name, label }: { name: string; label: string }) {
+  const input = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (!input.current || input.current.value) return;
+    const now = new Date();
+    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    input.current.value = local.toISOString().slice(0, 10);
+  }, []);
+
+  return (
+    <label className="flex flex-col gap-2">
+      <span className="field-label">{label}</span>
+      <input ref={input} type="date" name={name} required className="field" />
     </label>
   );
 }

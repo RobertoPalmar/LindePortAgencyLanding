@@ -15,7 +15,7 @@ export type RequestPayload = {
   email: string;
   port: string;
   services: readonly ServiceKey[];
-  eta: Date;
+  requiredDate: Date;
   message: string;
 };
 
@@ -62,10 +62,10 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function formatEta(eta: Date): string {
-  // ISO recortado a la fecha: un ETA con hora local induce a error cuando quien
-  // lo lee está en otro huso que quien lo escribió.
-  return eta.toISOString().slice(0, 10);
+function formatDate(value: Date): string {
+  // ISO recortado al día: una fecha con hora induce a error cuando quien la
+  // lee está en otro huso que quien la escribió.
+  return value.toISOString().slice(0, 10);
 }
 
 function formatServices(services: readonly ServiceKey[]): string {
@@ -78,7 +78,7 @@ function buildRows(data: RequestPayload): Array<[string, string]> {
     ["Empresa", data.company || "—"],
     ["Correo", data.email],
     ["Puerto", data.port],
-    ["ETA", formatEta(data.eta)],
+    ["Fecha requerida", formatDate(data.requiredDate)],
     ["Servicios", formatServices(data.services)],
     ["Mensaje", data.message || "—"],
   ];
@@ -180,7 +180,7 @@ export async function sendPortCallRequest(data: RequestPayload): Promise<boolean
       from: match ? { name: match[1], email: match[2] } : { email: from.trim() },
       // Responder desde el correo va al armador, no a la agencia.
       reply_to: { email: data.email, name: data.name },
-      subject: `Solicitud de escala · ${data.port} · ETA ${formatEta(data.eta)}`,
+      subject: `Solicitud de escala · ${data.port} · ${formatDate(data.requiredDate)}`,
       // SendGrid exige el texto plano antes del HTML.
       content: [
         { type: "text/plain", value: buildText(data) },

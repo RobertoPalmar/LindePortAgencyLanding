@@ -255,7 +255,7 @@ export const en: Dictionary = {
   contact: {
     eyebrow: "07 — CONTACT",
     title: "One point of contact for every port call",
-    body: "Send us the port, the ETA and the services you need. Our operations desk answers around the clock, every day of the year.",
+    body: "Send us the port, the date and the services you need. Our operations desk answers around the clock, every day of the year.",
     blocks: [
       { label: "OPERATIONS · 24 HOURS", value: CONTACT.phone, href: CONTACT.phoneHref },
       { label: "EMAIL", value: CONTACT.email, href: CONTACT.emailHref },
@@ -265,7 +265,7 @@ export const en: Dictionary = {
       company: "COMPANY",
       email: "EMAIL",
       port: "PORT",
-      eta: "ETA",
+      requiredDate: "REQUIRED DATE",
       servicesLabel: "SERVICES REQUIRED",
       servicesPlaceholder: "Select the services",
       services: {
@@ -285,7 +285,7 @@ export const en: Dictionary = {
       sending: "SENDING…",
       sent: "Request sent. Our operations desk will get back to you shortly.",
       error: "We could not send the request. Check the details and try again.",
-      required: "Please review the required fields: name, email, port, ETA and at least one service.",
+      required: "Please review the required fields: name, email, port, date and at least one service.",
     },
   },
 

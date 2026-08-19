@@ -258,7 +258,7 @@ export const es = {
   contact: {
     eyebrow: "07 — CONTACTO",
     title: "Un solo punto de contacto para cada escala",
-    body: "Indíquenos el puerto, el ETA y los servicios que necesita. Nuestra mesa de operaciones responde a toda hora, todos los días del año.",
+    body: "Indíquenos el puerto, la fecha y los servicios que necesita. Nuestra mesa de operaciones responde a toda hora, todos los días del año.",
     blocks: [
       { label: "OPERACIONES · 24 HORAS", value: CONTACT.phone, href: CONTACT.phoneHref },
       { label: "CORREO", value: CONTACT.email, href: CONTACT.emailHref },
@@ -268,7 +268,7 @@ export const es = {
       company: "EMPRESA",
       email: "CORREO",
       port: "PUERTO",
-      eta: "ETA",
+      requiredDate: "FECHA DE REQUERIMIENTO",
       servicesLabel: "SERVICIOS REQUERIDOS",
       servicesPlaceholder: "Selecciona los servicios",
       services: {
@@ -288,7 +288,7 @@ export const es = {
       sending: "ENVIANDO…",
       sent: "Solicitud enviada. Nuestra mesa de operaciones le responde en breve.",
       error: "No pudimos enviar la solicitud. Revisa los datos e inténtalo de nuevo.",
-      required: "Revisa los campos obligatorios: nombre, correo, puerto, ETA y al menos un servicio.",
+      required: "Revisa los campos obligatorios: nombre, correo, puerto, fecha y al menos un servicio.",
     },
   },
 
