@@ -122,9 +122,18 @@ export function Header({ d, locale }: Props) {
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="lp-mobile-nav"
-            className="mono border border-rule-3 px-3 py-[10px] text-[11px] tracking-[0.12em] text-navy"
+            aria-label={d.nav.menu}
+            className="flex h-[38px] w-[38px] items-center justify-center border border-rule-3 text-navy transition-colors duration-[0.18s] hover:border-navy"
           >
-            {d.nav.menu}
+            {/* El rótulo lo da el aria-label: el icono no se anuncia solo. */}
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path
+                d="M0 1h18M0 6h18M0 11h18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              />
+            </svg>
           </button>
         </div>
       </div>
@@ -150,9 +159,12 @@ export function Header({ d, locale }: Props) {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="mono border border-rule-3 px-3 py-[10px] text-[11px] tracking-[0.12em]"
+              aria-label={d.nav.close}
+              className="flex h-[38px] w-[38px] items-center justify-center border border-rule-3 text-navy transition-colors duration-[0.18s] hover:border-navy"
             >
-              {d.nav.close}
+              <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true">
+                <path d="M1 1l13 13M14 1L1 14" fill="none" stroke="currentColor" strokeWidth="1.6" />
+              </svg>
             </button>
           </div>
           <nav className="rail flex flex-1 flex-col gap-1 py-8">
