@@ -116,7 +116,7 @@ function buildHtml(data: RequestPayload, logoUrl: string): string {
               <td align="center" style="background:#0f1c34;padding:28px 24px 24px">
                 <img src="${logoUrl}" width="140" alt="Linde Port Agency" style="display:block;width:140px;max-width:140px;height:auto;border:0;margin:0 auto 14px">
                 <div style="font:700 21px/1.3 Arial,Helvetica,sans-serif;color:#ffffff">Nueva solicitud de escala</div>
-                <div style="font:600 11px/1.5 'Courier New',monospace;letter-spacing:.18em;color:#C8102E;margin-top:8px">FORMULARIO DEL SITIO WEB</div>
+                <div style="font:700 13px/1.5 Arial,Helvetica,sans-serif;letter-spacing:.14em;color:#E8536B;margin-top:10px">FORMULARIO DEL SITIO WEB</div>
               </td>
             </tr>
 
