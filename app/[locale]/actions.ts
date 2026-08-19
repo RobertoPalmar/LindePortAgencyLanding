@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { portNames } from "@/lib/ports";
+import { serviceKeys } from "@/lib/services";
 import { sendPortCallRequest } from "@/lib/email";
 
 export type ContactState = { status: "idle" | "ok" | "invalid" | "error" };
@@ -10,8 +11,9 @@ const Schema = z.object({
   name: z.string().min(2),
   company: z.string().optional(),
   email: z.string().email(),
-  vessel: z.string().min(2),
   port: z.enum(portNames),
+  // Al menos uno: una solicitud sin servicio no le dice nada a operaciones.
+  services: z.array(z.enum(serviceKeys)).min(1),
   eta: z.coerce.date(),
   message: z.string().max(2000).optional(),
   _hp: z.string().max(0), // honeypot
@@ -25,8 +27,9 @@ export async function submitRequest(
     name: formData.get("name"),
     company: formData.get("company") ?? "",
     email: formData.get("email"),
-    vessel: formData.get("vessel"),
     port: formData.get("port"),
+    // `getAll`: las casillas marcadas llegan repetidas bajo el mismo nombre.
+    services: formData.getAll("services"),
     eta: formData.get("eta"),
     message: formData.get("message") ?? "",
     _hp: formData.get("_hp") ?? "",
@@ -39,8 +42,8 @@ export async function submitRequest(
       name: parsed.data.name,
       company: parsed.data.company ?? "",
       email: parsed.data.email,
-      vessel: parsed.data.vessel,
       port: parsed.data.port,
+      services: parsed.data.services,
       eta: parsed.data.eta,
       message: parsed.data.message ?? "",
     });

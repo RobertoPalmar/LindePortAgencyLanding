@@ -3,6 +3,7 @@
 import { useFormState, useFormStatus } from "react-dom";
 import type { Dictionary } from "@/lib/i18n";
 import { portNames } from "@/lib/ports";
+import { serviceKeys } from "@/lib/services";
 import { submitRequest, type ContactState } from "@/app/[locale]/actions";
 
 const initial: ContactState = { status: "idle" };
@@ -78,7 +79,6 @@ export function ContactSection({ d }: { d: Dictionary }) {
               <Field name="name" label={f.name} required />
               <Field name="company" label={f.company} />
               <Field name="email" label={f.email} type="email" required />
-              <Field name="vessel" label={f.vessel} required />
               <label className="flex flex-col gap-2">
                 <span className="field-label">{f.port}</span>
                 <select name="port" required defaultValue={portNames[0]} className="field">
@@ -91,6 +91,27 @@ export function ContactSection({ d }: { d: Dictionary }) {
               </label>
               <Field name="eta" label={f.eta} type="date" required />
             </div>
+
+            {/*
+             * `fieldset` y no un `div` con texto: sin él, un lector de pantalla
+             * anuncia diez casillas sueltas sin decir de qué son.
+             */}
+            <fieldset className="mt-[18px] border-0 p-0">
+              <legend className="field-label mb-2 p-0">{f.servicesLabel}</legend>
+              <div className="grid gap-x-5 gap-y-[10px] sm:grid-cols-2">
+                {serviceKeys.map((key) => (
+                  <label key={key} className="flex cursor-pointer items-center gap-[10px] text-[15px]">
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={key}
+                      className="h-[17px] w-[17px] flex-none accent-red"
+                    />
+                    <span>{f.services[key]}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
             <label className="mt-[18px] flex flex-col gap-2">
               <span className="field-label">{f.message}</span>
