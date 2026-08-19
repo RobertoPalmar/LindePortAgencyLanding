@@ -267,6 +267,7 @@ export const en: Dictionary = {
       port: "PORT",
       eta: "ETA",
       servicesLabel: "SERVICES REQUIRED",
+      servicesPlaceholder: "Select the services",
       services: {
         agency: "Full Port Agency",
         hub: "Hub Agency",

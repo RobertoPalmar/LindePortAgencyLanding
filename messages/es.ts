@@ -270,6 +270,7 @@ export const es = {
       port: "PUERTO",
       eta: "ETA",
       servicesLabel: "SERVICIOS REQUERIDOS",
+      servicesPlaceholder: "Selecciona los servicios",
       services: {
         agency: "Agencia completa",
         hub: "Hub Agency",

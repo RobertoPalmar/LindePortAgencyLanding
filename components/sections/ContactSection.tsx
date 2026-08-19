@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import type { Dictionary } from "@/lib/i18n";
 import { portNames } from "@/lib/ports";
-import { serviceKeys } from "@/lib/services";
+import { serviceKeys, type ServiceKey } from "@/lib/services";
 import { submitRequest, type ContactState } from "@/app/[locale]/actions";
 
 const initial: ContactState = { status: "idle" };
@@ -92,26 +93,7 @@ export function ContactSection({ d }: { d: Dictionary }) {
               <Field name="eta" label={f.eta} type="date" required />
             </div>
 
-            {/*
-             * `fieldset` y no un `div` con texto: sin él, un lector de pantalla
-             * anuncia diez casillas sueltas sin decir de qué son.
-             */}
-            <fieldset className="mt-[18px] border-0 p-0">
-              <legend className="field-label mb-2 p-0">{f.servicesLabel}</legend>
-              <div className="grid gap-x-5 gap-y-[10px] sm:grid-cols-2">
-                {serviceKeys.map((key) => (
-                  <label key={key} className="flex cursor-pointer items-center gap-[10px] text-[15px]">
-                    <input
-                      type="checkbox"
-                      name="services"
-                      value={key}
-                      className="h-[17px] w-[17px] flex-none accent-red"
-                    />
-                    <span>{f.services[key]}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <ServicePicker f={f} />
 
             <label className="mt-[18px] flex flex-col gap-2">
               <span className="field-label">{f.message}</span>
@@ -158,6 +140,112 @@ export function ContactSection({ d }: { d: Dictionary }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Servicios en desplegable. Mismo patrón que el selector de idioma del brochure:
+ * cerrar con Escape y con clic fuera, porque un panel que solo se cierra con su
+ * propio botón deja al usuario atrapado si se abre por error.
+ *
+ * Las casillas siguen siendo `input` reales dentro del panel: así el formulario
+ * las serializa solo, sin campos ocultos que sincronizar a mano.
+ */
+function ServicePicker({ f }: { f: Dictionary["contact"]["form"] }) {
+  const [open, setOpen] = useState(false);
+  const [picked, setPicked] = useState<ServiceKey[]>([]);
+  const wrap = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onClick = (e: MouseEvent) => {
+      if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [open]);
+
+  const toggle = (key: ServiceKey) =>
+    setPicked((prev) => (prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]));
+
+  return (
+    <div className="mt-[18px] flex flex-col gap-2">
+      <span className="field-label" id="services-label">
+        {f.servicesLabel}
+      </span>
+
+      <div ref={wrap} className="relative">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-haspopup="true"
+          aria-labelledby="services-label services-value"
+          className="field flex w-full items-start justify-between gap-3 text-left"
+        >
+          {/*
+           * Los badges van dentro del disparador como `span`: un botón dentro de
+           * otro botón es HTML inválido, así que quitar un servicio se hace
+           * desmarcándolo en el panel, no con una x en la etiqueta.
+           */}
+          <span id="services-value" className="flex flex-wrap items-center gap-[6px]">
+            {picked.length === 0 ? (
+              <span className="text-ink-mute">{f.servicesPlaceholder}</span>
+            ) : (
+              picked.map((key) => (
+                <span
+                  key={key}
+                  className="border border-navy/15 bg-panel px-[9px] py-[3px] text-[12.5px] leading-[1.5] text-navy"
+                >
+                  {f.services[key]}
+                </span>
+              ))
+            )}
+          </span>
+          <svg
+            width="12"
+            height="8"
+            viewBox="0 0 12 8"
+            aria-hidden="true"
+            className="mt-[7px] flex-none transition-transform duration-[0.18s]"
+            style={{ transform: open ? "rotate(180deg)" : "none" }}
+          >
+            <path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          </svg>
+        </button>
+
+        <div
+          className="absolute left-0 right-0 top-[calc(100%+6px)] z-[5] max-h-[260px] overflow-y-auto border border-hair bg-white py-2 shadow-picker transition-[opacity,transform] duration-[0.18s]"
+          style={{
+            opacity: open ? 1 : 0,
+            transform: open ? "translateY(0)" : "translateY(-6px)",
+            pointerEvents: open ? "auto" : "none",
+          }}
+        >
+          {serviceKeys.map((key) => (
+            <label
+              key={key}
+              className="flex cursor-pointer items-center gap-[10px] px-[14px] py-[9px] text-[15px] transition-colors duration-[0.18s] hover:bg-panel"
+            >
+              <input
+                type="checkbox"
+                name="services"
+                value={key}
+                checked={picked.includes(key)}
+                onChange={() => toggle(key)}
+                className="h-[16px] w-[16px] flex-none accent-red"
+              />
+              <span>{f.services[key]}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
