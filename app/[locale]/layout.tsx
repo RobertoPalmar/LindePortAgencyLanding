@@ -64,8 +64,16 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     },
-    // Provisional: el `ship-favicon.svg` del proyecto de marca está pendiente de entrega.
-    icons: { icon: [{ url: "/brand/linde-logo.svg", type: "image/svg+xml" }] },
+    // Recortados al barco de la marca: el lockup completo, con el texto, es una
+    // mancha ilegible en una pestaña de 16px.
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "32x32" },
+        { url: "/brand/favicon-32.png", type: "image/png", sizes: "32x32" },
+        { url: "/brand/favicon-512.png", type: "image/png", sizes: "512x512" },
+      ],
+      apple: [{ url: "/brand/apple-touch-icon.png", sizes: "180x180" }],
+    },
   };
 }
 
