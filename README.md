@@ -95,25 +95,21 @@ variable CSS `--rail`: 24px (móvil) · 48px (≥1024) · 72px (≥1280), y `.ba
 
 ## Pendiente (necesita material del cliente)
 
-1. **Imagen de Open Graph**: `app/[locale]/layout.tsx` declara `/og/linde-og.jpg`, pero el archivo
-   no existe, así que las vistas previas al compartir el enlace salen sin imagen. Hace falta un
-   1200×630. Es el único hueco de material que queda: ya están conectados agencia, brochure, las 3
-   de galería y los 5 puertos (`public/photos/`), más los 3 vídeos (`public/video/`). Las fotos no
-   asignadas viven en `design-assets/photos/`, fuera de `public/`, para no desplegar peso muerto.
-2. **Afinar los vídeos.** Viven en `public/video/` y se llaman por la sección que los consume:
-   `hero.mp4` (17 MB), `agency.mp4` (sección 01, 6,0 MB) y `launch.mp4` (sección 02,
-   1280×720 · 21,6 s · 23,3 MB). `hero.mp4` y `launch.mp4` pesan de más para autoplay: el de Launch
-   va a ~8,6 Mbps y baja a ~3 MB sin pérdida visible, y el del hero es el peor caso porque bloquea
-   la primera pantalla. Para ambos:
-   `ffmpeg -i entrada.mp4 -an -vf scale=1280:-2 -c:v libx264 -crf 28 -movflags +faststart salida.mp4`.
-   Los tres ya están en faststart (`moov` al principio) y van con `preload="auto"`: Safari se queda
-   en `readyState 1` con `metadata` y nunca llega a reproducir. Falta el `poster` de Launch; el del
-   hero es el primer fotograma del propio vídeo —si cambia `hero.mp4`, hay que regenerarlo con
+1. **Imagen de Open Graph definitiva**: `public/og/linde-og.jpg` existe, pero está generada a
+   partir de la marca (logo, claim y los cinco puertos sobre navy). Una versión con fotografía real
+   comunicaría mejor al compartir el enlace. Los 12 huecos de imagen del sitio ya están conectados
+   a material real; las fotos no asignadas viven en `design-assets/photos/`, fuera de `public/`,
+   para no desplegar peso muerto.
+2. **Póster de Launch.** Los tres vídeos de `public/video/` ya están afinados: 1920×1080, sin pista
+   de audio —se reproducen con `muted`, así que el audio solo pesaba— y con el `moov` al principio
+   para que empiecen a reproducir antes de descargarse enteros. `hero.mp4` 3,5 MB, `agency.mp4`
+   3,7 MB y `launch.mp4` 1,5 MB, desde 30,6 MB entre los tres. Se recomprimieron con
+   `ffmpeg -i entrada.mp4 -an -c:v libx264 -crf 32 -preset slow -pix_fmt yuv420p -movflags +faststart salida.mp4`;
+   a 1080p ese CRF no muestra pérdida visible frente al original.
+   Falta el `poster` de Launch. El del hero es el primer fotograma del propio vídeo —si cambia
+   `hero.mp4` hay que regenerarlo con
    `ffmpeg -i public/video/hero.mp4 -vframes 1 -q:v 3 public/photos/hero/hero-poster.jpg -y`— y la
    sección 01 usa `agency-vertical.jpg`.
    El material de origen sin usar vive en `design-assets/` (la carpeta `video/` está ignorada).
-3. **Envío del formulario**: [app/[locale]/actions.ts](app/[locale]/actions.ts) valida y registra en
-   consola; falta el proveedor de correo para enviar a `CONTACT.email`, o la conexión al CRM.
-4. **Favicon e imagen OG**: hoy el favicon apunta al logo vertical; el `ship-favicon.svg` del
-   proyecto de marca y `public/og/linde-og.jpg` están pendientes.
-5. **Dominio** en `metadataBase` (hoy `https://lindeportagency.com`).
+3. **Favicon de marca**: el favicon actual se genera recortando el barco de `linde-logo.svg`; el
+   `ship-favicon.svg` del proyecto de marca sigue pendiente de entrega.
