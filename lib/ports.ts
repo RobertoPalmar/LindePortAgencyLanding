@@ -4,8 +4,8 @@ export const portNames = ["Aruba", "Bonaire", "Curaçao", "Panama", "Venezuela"]
 /** Mismo orden que `portNames`. */
 export const portPhotos = [
   "/photos/ports/aruba.webp",
-  "/photos/ports/bonaire.jpg",
-  "/photos/ports/curacao.jpg",
+  "/photos/ports/bonaire.webp",
+  "/photos/ports/curacao.webp",
   "/photos/ports/panama.jpg",
   "/photos/ports/venezuela.jpg",
 ];
