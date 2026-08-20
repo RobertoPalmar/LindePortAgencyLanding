@@ -120,14 +120,6 @@ export function PortsSection({ d }: { d: Dictionary }) {
                   </span>
                 ))}
               </div>
-              <div className="mt-[26px] flex flex-col gap-[11px] border-t border-navy-line2 pt-5">
-                {sel.detail.map((detail) => (
-                  <div key={detail} className="flex items-baseline gap-[11px]">
-                    <span aria-hidden="true" className="h-[5px] w-[5px] flex-none bg-red" />
-                    <span className="text-[14.5px] leading-[1.5] text-onNavy">{detail}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>

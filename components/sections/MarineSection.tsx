@@ -21,7 +21,7 @@ export function MarineSection({ d }: { d: Dictionary }) {
             className="group relative min-h-[176px] bg-white px-[26px] pb-7 pt-6 transition-colors duration-[0.24s] hover:bg-hover-cream"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-[38px] w-[38px] items-center justify-center border border-hair transition-[background,border-color] duration-[0.24s] group-hover:border-red group-hover:bg-white">
+              <div className="flex h-[46px] w-[46px] items-center justify-center border border-hair transition-[background,border-color] duration-[0.24s] group-hover:border-red group-hover:bg-white">
                 <LineIcon index={i} />
               </div>
               <span className="mono text-[11px] tracking-[0.16em] text-red">
