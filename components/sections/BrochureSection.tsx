@@ -89,7 +89,7 @@ export function BrochureSection({ d }: { d: Dictionary }) {
               <a
                 role="menuitem"
                 href="/brochure/linde-brochure-es.pdf"
-                download="Linde-Port-Agency-ES.pdf"
+                download="Brochure ES - Linde Port Agency.pdf"
                 onClick={() => setPick(false)}
                 className="block px-[14px] py-3 text-[14px] font-semibold text-navy transition-colors duration-[0.18s] hover:bg-panel"
               >
@@ -98,7 +98,7 @@ export function BrochureSection({ d }: { d: Dictionary }) {
               <a
                 role="menuitem"
                 href="/brochure/linde-brochure-en.pdf"
-                download="Linde-Port-Agency-EN.pdf"
+                download="Brochure EN - Linde Port Agency.pdf"
                 onClick={() => setPick(false)}
                 className="block px-[14px] py-3 text-[14px] font-semibold text-navy transition-colors duration-[0.18s] hover:bg-panel"
               >
